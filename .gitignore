@@ -1,6 +1,6 @@
 data/
 simulator
-
+simulator/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
