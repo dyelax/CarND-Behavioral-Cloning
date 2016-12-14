@@ -28,6 +28,7 @@ def main(_):
         data = np.array([row for row in reader])
 
     # Split train and validation data
+    np.random.shuffle(data)
     split_i = int(len(data) * 0.9)
     X_train, y_train = list(zip(*data[:split_i]))
     X_val, y_val = list(zip(*data[split_i:]))
@@ -42,16 +43,10 @@ def main(_):
     model = Sequential([
         Conv2D(32, 3, 3, input_shape=(32, 16, 1), border_mode='same', activation='relu'),
         Conv2D(64, 3, 3, border_mode='same', activation='relu'),
-        # MaxPooling2D(strides=(2, 2)),
         Dropout(0.5),
         Conv2D(128, 3, 3, border_mode='same', activation='relu'),
         Conv2D(256, 3, 3, border_mode='same', activation='relu'),
-        # MaxPooling2D(strides=(2, 2)),
         Dropout(0.5),
-        # Conv2D(512, 3, 3, border_mode='same', activation='relu'),
-        # Conv2D(512, 3, 3, border_mode='same', activation='relu'),
-        # MaxPooling2D(strides=(2, 2)),
-        # Dropout(0.5),
         Flatten(),
         Dense(1024, activation='relu'),
         Dense(512, activation='relu'),
