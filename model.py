@@ -3,6 +3,7 @@ import numpy as np
 import csv
 from keras.models import Sequential
 from keras.layers import Conv2D, ConvLSTM2D, Dense, MaxPooling2D, Dropout, Flatten
+from keras.optimizers import Adam
 
 from utils import gen_batches
 
@@ -12,8 +13,9 @@ FLAGS = flags.FLAGS
 flags.DEFINE_string('imgs_dir', 'data/IMG/', 'The directory of the image data.')
 flags.DEFINE_string('data_path', 'data/driving_log_clean.csv', 'The path to the csv of training data.')
 flags.DEFINE_integer('batch_size', 128, 'The minibatch size.')
-flags.DEFINE_integer('num_epochs', 5, 'The number of epochs to train for.')
-flags.DEFINE_float('lrate', 0.001, 'The learning rate for training.')
+flags.DEFINE_integer('num_epochs', 10, 'The number of epochs to train for.')
+flags.DEFINE_float('lrate', 0.0001, 'The learning rate for training.')
+
 
 def main(_):
     ##
@@ -39,24 +41,24 @@ def main(_):
 
     model = Sequential([
         Conv2D(32, 3, 3, input_shape=(32, 16, 1), border_mode='same', activation='relu'),
-        Conv2D(64, 3, 3, input_shape=(32, 16, 1), border_mode='same', activation='relu'),
-        MaxPooling2D(strides=(2, 2)),
+        Conv2D(64, 3, 3, border_mode='same', activation='relu'),
+        # MaxPooling2D(strides=(2, 2)),
         Dropout(0.5),
-        Conv2D(128, 3, 3, input_shape=(32, 16, 1), border_mode='same', activation='relu'),
-        Conv2D(256, 3, 3, input_shape=(32, 16, 1), border_mode='same', activation='relu'),
-        MaxPooling2D(strides=(2, 2)),
+        Conv2D(128, 3, 3, border_mode='same', activation='relu'),
+        Conv2D(256, 3, 3, border_mode='same', activation='relu'),
+        # MaxPooling2D(strides=(2, 2)),
         Dropout(0.5),
-        Conv2D(512, 3, 3, input_shape=(32, 16, 1), border_mode='same', activation='relu'),
-        Conv2D(512, 3, 3, input_shape=(32, 16, 1), border_mode='same', activation='relu'),
-        MaxPooling2D(strides=(2, 2)),
-        Dropout(0.5),
+        # Conv2D(512, 3, 3, border_mode='same', activation='relu'),
+        # Conv2D(512, 3, 3, border_mode='same', activation='relu'),
+        # MaxPooling2D(strides=(2, 2)),
+        # Dropout(0.5),
         Flatten(),
         Dense(1024, activation='relu'),
         Dense(512, activation='relu'),
         Dense(128, activation='relu'),
-        Dense(1, name='output'),
+        Dense(1, name='output', activation='tanh'),
     ])
-    model.compile(optimizer='adam', loss='mse')
+    model.compile(optimizer=Adam(lr=FLAGS.lrate), loss='mse')
 
     ##
     # Train
@@ -67,6 +69,15 @@ def main(_):
                                   FLAGS.num_epochs,
                                   validation_data=gen_batches(X_val, y_val, FLAGS.batch_size),
                                   nb_val_samples=len(X_val))
+
+    ##
+    # Save model
+    ##
+
+    json = model.to_json()
+    model.save_weights('save/model.h5')
+    with open('save/model.json', 'w') as f:
+        f.write(json)
 
 
 if __name__ == '__main__':
