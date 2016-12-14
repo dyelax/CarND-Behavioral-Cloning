@@ -26,6 +26,7 @@ def main(_):
         data = np.array([row for row in reader])
 
     # Split train and validation data
+
     split_i = int(len(data) * 0.9)
     X_train, y_train = list(zip(*data[:split_i]))
     X_val, y_val = list(zip(*data[split_i:]))
