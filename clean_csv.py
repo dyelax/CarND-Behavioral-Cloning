@@ -2,7 +2,7 @@ import csv
 from os import listdir
 from os.path import join
 
-base_dir = '/Users/matt/Programming/Deep-Learning/Autonomous_Driving/udacity/CarND-Behavioral-Cloning/data/IMG'
+base_dir = '/home/matt/DL/Autonomous_Driving/Udacity/CarND-Behavioral-Cloning/data/IMG'
 
 img_files = listdir('data/IMG/')
 with open('data/driving_log_clean.csv', 'w') as wf:
