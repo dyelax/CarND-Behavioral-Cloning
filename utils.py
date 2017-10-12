@@ -9,7 +9,7 @@ def read_imgs(img_paths):
 
     return imgs
 
-def resize(imgs, shape=(32, 16, 3)):
+def resize(imgs, shape=(64, 32, 3)):
     """
     Resize images to shape.
     """
@@ -77,5 +77,8 @@ def gen_batches(imgs, angles, batch_size):
         batch_imgs_raw, angles_raw = read_imgs(imgs[indeces]), angles[indeces].astype(float)
 
         batch_imgs, batch_angles = augment(preprocess(batch_imgs_raw), angles_raw)
+
+        # print(batch_imgs)
+        # print(batch_angles)
 
         yield batch_imgs, batch_angles
