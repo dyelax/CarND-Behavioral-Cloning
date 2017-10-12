@@ -1,5 +1,18 @@
-# CarND-Behavioral-Cloning
+# Behavioral Cloning
 My behavioral cloning project from Udactiy's Self-Driving Car Nanodegree.
+
+## Background
+The goal of this project was to train a neural network to drive a car by predicting steering angles from camera images from the car's windshield.
+
+Here is a short example of my network autonomously driving a car in simulation:
+
+<img src="https://github.com/dyelax/CarND-Behavioral-Cloning/blob/master/results/track2-short.gif" width="100%" />
+
+Longer videos of the car autonomously navigating both simulator tracks can be found here:
+
+Track 1: https://youtu.be/glOSIODMWL4
+
+Track 2: https://youtu.be/57tKsM3bt0A
 
 ## Data
 I collected data by driving around both tracks normally for four laps each. I then collected "recovery" data for upwards of six laps by driving to the side of the track, then recording my movements to get back on a correct path. I went back and collected more data around tricky corners since most of the tracks were straight or soft curves.
