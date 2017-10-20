@@ -1,8 +1,8 @@
 import csv
 
-with open('data/sdc-lab/mjc+mrg/combined.csv', 'w') as wf:
-    with open('data/sdc-lab/mjc/driving_log_clean.csv', 'r') as rf1:
-        with open('data/sdc-lab/mrg/driving_log_clean.csv', 'r') as rf2:
+with open('data/mjc+mrg/combined_hal.csv', 'w') as wf:
+    with open('data/mjc/driving_log_clean_hal.csv', 'r') as rf1:
+        with open('data/mrg/driving_log_clean_hal.csv', 'r') as rf2:
             reader1 = csv.reader(rf1)
             reader2 = csv.reader(rf2)
             writer = csv.writer(wf)

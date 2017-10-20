@@ -9,7 +9,7 @@ def read_imgs(img_paths):
 
     return imgs
 
-def resize(imgs, shape=(64, 32, 3)):
+def resize(imgs, shape=(64, 128, 3)):
     """
     Resize images to shape.
     """
@@ -26,6 +26,13 @@ def rgb2gray(imgs):
     """
     return np.mean(imgs, axis=3, keepdims=True)
 
+def raindrop_droptop(imgs):
+    """
+    Crop out the top half of imgs.
+    """
+    height = np.shape(imgs)[1]
+    return imgs[:, height//2:, :, :]
+
 def normalize(imgs):
     """
     Normalize images between [-1, 1].
@@ -34,8 +41,9 @@ def normalize(imgs):
 
 def preprocess(imgs):
     imgs_processed = resize(imgs)
-    imgs_processed = rgb2gray(imgs_processed)
+    # imgs_processed = rgb2gray(imgs_processed)
     imgs_processed = normalize(imgs_processed)
+    imgs_processed = raindrop_droptop(imgs_processed)
 
     return imgs_processed
 
